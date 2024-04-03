@@ -65,11 +65,12 @@ class _SignupPageState extends State<SignupPage> {
                   if (formKey.currentState!.validate()) {
                     context.read<AuthBloc>().add(
                           AuthSignUp(
-                            name: nameController.text,
+                            name: nameController.text.trim(),
                             email: emailController.text.trim(),
-                            password: passwordController.text,
+                            password: passwordController.text.trim(),
                           ),
                         );
+                    print('signup button triggered');
                   }
                 },
               ),
