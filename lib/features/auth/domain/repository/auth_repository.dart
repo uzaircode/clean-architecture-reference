@@ -1,4 +1,4 @@
-import 'package:clean_architecture_rivaan/features/auth/domain/entities/user.dart';
+import 'package:clean_architecture_rivaan/core/common/entities/user.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/error/failures.dart';
@@ -15,4 +15,6 @@ abstract interface class AuthRepository {
     required String email,
     required String password,
   });
+
+  Future<Either<Failure, User>> currentUser();
 }

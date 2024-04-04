@@ -1,3 +1,4 @@
+import 'package:clean_architecture_rivaan/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:clean_architecture_rivaan/core/theme/theme.dart';
 import 'package:clean_architecture_rivaan/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:clean_architecture_rivaan/features/auth/presentation/pages/login_page.dart';
@@ -11,6 +12,9 @@ void main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
+        create: (_) => serviceLocator<AppUserCubit>(),
+      ),
+      BlocProvider(
         create: (_) => serviceLocator<AuthBloc>(),
       ),
     ],
@@ -18,15 +22,38 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthBloc>().add(AuthIsUserLoggedIn());
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: AppTheme.darkThemeMode,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: BlocSelector<AppUserCubit, AppUserState, bool>(
+        selector: (state) {
+          return state is AppUserLoggedIn;
+        },
+        builder: (context, isLoggedIn) {
+          if (isLoggedIn) {
+            return const Scaffold(
+              body: Center(child: Text('Logged In')),
+            );
+          }
+          return const LoginPage();
+        },
+      ),
     );
   }
 }
@@ -44,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: LoginPage(), // This trailing comma makes auto-formatting nicer for build methods.
+      body: LoginPage(),
     );
   }
 }
