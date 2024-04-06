@@ -88,6 +88,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) {
     _appUserCubit.updateUser(user);
-    emit(AuthSucess(user));
+    emit(AuthSuccess(user));
   }
 }

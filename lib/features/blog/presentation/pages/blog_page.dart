@@ -68,9 +68,7 @@ class _BlogPageState extends State<BlogPage> {
               },
             );
           }
-          return const Center(
-            child: Text('no blog from the user'),
-          );
+          return const SizedBox();
         },
       ),
     );

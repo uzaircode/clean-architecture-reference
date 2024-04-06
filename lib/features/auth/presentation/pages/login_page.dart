@@ -5,6 +5,7 @@ import 'package:clean_architecture_rivaan/features/auth/presentation/bloc/auth_b
 import 'package:clean_architecture_rivaan/features/auth/presentation/pages/signup_page.dart';
 import 'package:clean_architecture_rivaan/features/auth/presentation/widgets/auth_field.dart';
 import 'package:clean_architecture_rivaan/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:clean_architecture_rivaan/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,20 +16,18 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _SignupPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    nameController.dispose();
     super.dispose();
   }
 
@@ -41,6 +40,12 @@ class _SignupPageState extends State<LoginPage> {
           listener: (context, state) {
             if (state is AuthFailure) {
               showSnackBar(context, state.message);
+            } else if (state is AuthSuccess) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                BlogPage.route(),
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {

@@ -22,6 +22,8 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
       final blogData = await supabaseClient.from('blogs').insert(blog.toJson()).select();
 
       return BlogModel.fromJson(blogData.first);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -39,7 +41,11 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
             image,
           );
 
-      return supabaseClient.storage.from('blog_images').getPublicUrl(blog.id);
+      return supabaseClient.storage.from('blog_images').getPublicUrl(
+            blog.id,
+          );
+    } on StorageException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -48,15 +54,22 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
   @override
   Future<List<BlogModel>> getAllBlocs() async {
     try {
-      final blogs = await supabaseClient.from('blogs').select('*, profiles (name)');
+      final blogs = await supabaseClient.from('blogs').select(
+            '*, profiles (name)',
+          );
 
       return blogs
           .map((blog) => BlogModel.fromJson(blog).copyWith(
                 userName: blog['profiles']['name'],
               ))
           .toList();
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
   }
 }
+
+//PostgrestException - for database call
+//StorageException - when comunicate directly with postgres

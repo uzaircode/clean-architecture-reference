@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:clean_architecture_rivaan/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:clean_architecture_rivaan/core/common/widgets/loader.dart';
+import 'package:clean_architecture_rivaan/core/constant/constants.dart';
 import 'package:clean_architecture_rivaan/core/theme/app_pallete.dart';
 import 'package:clean_architecture_rivaan/core/utils/pick_image.dart';
 import 'package:clean_architecture_rivaan/core/utils/show_snackbar.dart';
@@ -151,12 +152,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
-                          'Technology',
-                          'Business',
-                          'Programming',
-                          'Entertainment',
-                        ]
+                        children: Constants.topics
                             .map(
                               (e) => Padding(
                                 padding: const EdgeInsets.all(5.0),

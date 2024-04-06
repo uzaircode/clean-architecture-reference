@@ -54,28 +54,11 @@ class _MyAppState extends State<MyApp> {
         builder: (context, isLoggedIn) {
           if (isLoggedIn) {
             return const BlogPage();
+          } else {
+            return const LoginPage();
           }
-          return const LoginPage();
         },
       ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: LoginPage(),
     );
   }
 }

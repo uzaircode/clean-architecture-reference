@@ -2,7 +2,6 @@ import 'package:clean_architecture_rivaan/core/theme/app_pallete.dart';
 import 'package:clean_architecture_rivaan/core/utils/calculate_reading_time.dart';
 import 'package:clean_architecture_rivaan/core/utils/format_date.dart';
 import 'package:clean_architecture_rivaan/features/blog/domain/entities/blog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BlogViewerPage extends StatelessWidget {
